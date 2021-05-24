@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { WebSocketContext } from "../WebSocket";
 import FlightInfo from "./FlightInfo";
@@ -9,6 +9,12 @@ const Flights = () => {
   const {
     flights: { flights: flightsData },
   } = useSelector(({ flights }) => ({ flights }));
+
+  useEffect(() => {
+    if (socket) {
+      socket.emit("FLIGHTS");
+    }
+  }, [socket]);
 
   const onClickGetInfo = () => {
     if (socket) {
